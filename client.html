@@ -1,0 +1,45 @@
+<!-- Socket.io -client joka on tehty ilman mitään sovelluskehystä tai apukirjastoa-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>client</title>
+        <!-- kirjasto löytyy node_modules kansiosta tällä polkumäärityksellä-->
+        <script src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript">
+            //Luodaan clientin socket joka yhdistetään serveriin
+            const socket = io.connect("http://localhost:3010");
+            //Joka kerta kun 'message_to_client' -tapahtuma saapuu serveriltä
+            //laitetaan data diviin joka id on chat. Lisätään myös vanhat viestit perään
+     //socket.on - встречается, слушается сообщение
+            socket.on('message_to_client', (data) => {
+                document.getElementById('result').innerHTML = ('<br>' +
+                        data.message + document.getElementById('result').innerHTML);
+            });
+
+
+            //встречается событие welcome с сервера
+            socket.on('welcome', (data)=> {
+                console.log(data);
+                welcome.innerHTML = 'Welcome to the game <strong>' + data.name + '</strong>';
+            });
+            //встречается событие win с сервера
+            socket.on('win', (data)=> {
+                document.getElementById('result').innerHTML = '<br>' + data['message'];
+            });
+
+            function sendNumber() {
+                //otetaan tekstikentän sisältö talteen
+                const contents = document.getElementById('number_input').value;
+                //lähetetään eli emitoidaan tapahtuma 'guess' jolla data lähtee JSON-dataa
+              socket.emit('guess', {message: contents});
+            }
+        </script>
+    </head>
+    <body>
+        <div id="welcome"></div>
+        <h2>Guess a number between 1 and 100 </h2>
+        <input type="text" id="number_input"/>
+        <button onclick="sendNumber()">send</button>
+        <div id="result"></div>
+    </body>
+</html>

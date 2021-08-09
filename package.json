@@ -1,0 +1,21 @@
+{
+  "name": "nodesocket",
+  "version": "1.0.0",
+  "description": "Node tehtävä",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "nodemon server.js"
+  },
+  "author": "tuito",
+  "license": "ISC",
+  "dependencies": {
+    "moniker": "latest",
+    "nodemon": "latest",
+    "socket.io": "latest"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.0.0"
+  }
+}
